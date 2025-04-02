@@ -5,7 +5,8 @@ on:
     paths:
       - 'inSys/keywords.txt'
   schedule:
-    - cron: '0 * * * *'  # 매 정각마다 실행 (UTC 기준)
+    - cron: '0 0 * * *'  # 매일 자정
+  workflow_dispatch:      # 수동 실행 버튼 활성화
 
 jobs:
   build:
