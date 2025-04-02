@@ -1,0 +1,5 @@
+mkdir entries
+touch entries/.gitkeep
+git add entries/.gitkeep
+git commit -m "entries 폴더 초기화"
+git push
