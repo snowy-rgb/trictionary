@@ -5,31 +5,31 @@ on:
     paths:
       - 'inSys/keywords.txt'
   schedule:
-    - cron: '0 0 * * *'  # 매일 자정
-  workflow_dispatch:      # 수동 실행 버튼 활성화
+    - cron: '0 0 * * *'
+  workflow_dispatch:
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - name: 리포지토리 체크아웃
-      uses: actions/checkout@v3
+      - name: 리포지토리 체크아웃
+        uses: actions/checkout@v3
 
-    - name: Python 설정
-      uses: actions/setup-python@v4
-      with:
-        python-version: '3.10'
+      - name: Python 설정
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
 
-    - name: 의존성 설치
-      run: pip install requests beautifulsoup4
+      - name: 의존성 설치
+        run: pip install requests beautifulsoup4
 
-    - name: 빌드 스크립트 실행
-      run: python build.py
+      - name: 빌드 스크립트 실행
+        run: python build.py
 
       - name: Commit and Push changes
         run: |
           git config --global user.name "github-actions"
           git config --global user.email "actions@github.com"
-          git add -A  # <- 변경! 에러 안 나게 전부 추적
+          git add -A
           git commit -m "자동 빌드: keywords.txt 또는 스케줄 실행" || echo "변경 사항 없음"
           git push
