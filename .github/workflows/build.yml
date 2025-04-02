@@ -26,10 +26,10 @@ jobs:
     - name: 빌드 스크립트 실행
       run: python build.py
 
-    - name: 변경 사항 커밋 및 푸시
-      run: |
-        git config --global user.name "github-actions"
-        git config --global user.email "actions@github.com"
-				git add -A  # <- 변경! 에러 안 나게 전부 추적
-        git commit -m "자동 빌드: keywords.txt 업데이트 또는 스케줄 실행" || echo "변경 사항 없음"
-        git push
+      - name: Commit and Push changes
+        run: |
+          git config --global user.name "github-actions"
+          git config --global user.email "actions@github.com"
+          git add -A  # <- 변경! 에러 안 나게 전부 추적
+          git commit -m "자동 빌드: keywords.txt 또는 스케줄 실행" || echo "변경 사항 없음"
+          git push
