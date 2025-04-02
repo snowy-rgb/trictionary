@@ -28,7 +28,7 @@ jobs:
 
       - name: Commit and Push changes
         env:
-          TOKEN: ${{ secrets.GH_PAT }}
+          TOKEN: ${{ secrets.tricWorkflows }}
         run: |
           git config --global user.name "github-actions"
           git config --global user.email "actions@github.com"
