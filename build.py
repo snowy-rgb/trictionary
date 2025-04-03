@@ -28,6 +28,7 @@ def fetch_namu_page(keyword):
         article = soup.find("article")
         summary = article.find("p").text.strip() if article and article.find("p") else "요약 정보 없음"
 
+        code = f"{idx+1:04}"  # 0001, 0002, ...
         html_content = f"""
         <!DOCTYPE html>
         <html lang="ko">
@@ -35,7 +36,8 @@ def fetch_namu_page(keyword):
         <body>
         <h1>{keyword}</h1>
         <p>{summary}</p>
-        <p><a href="{char_url}" target="_blank">[나무위키 원문 보기]</a></p>
+        <p><strong>코드: code[{code}]</strong></p>
+        <p><a href="{url}" target="_blank">[나무위키 원문 보기]</a></p>
         </body></html>
         """
 
