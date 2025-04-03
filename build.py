@@ -8,10 +8,10 @@ ENTRIES_DIR = "entries"
 OUTPUT_JSON = "inSys/entry_list.json"
 
 def fetch_namu_page(keyword):
-    url = f"https://namu.wiki/w/{keyword}"
+    url = f"https://namu.moe/w/{keyword}"
     headers = {
         "User-Agent": "Mozilla/5.0",
-        "Referer": "https://namu.wiki/",
+        "Referer": "https://namu.moe/",
         "Accept-Language": "ko-KR,ko;q=0.9"
     }
 
