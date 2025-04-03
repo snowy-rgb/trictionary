@@ -10,7 +10,9 @@ OUTPUT_JSON = "inSys/entry_list.json"
 def fetch_namu_page(keyword):
     url = f"https://namu.wiki/w/{keyword}"
     headers = {
-        "User-Agent": "Mozilla/5.0"
+        "User-Agent": "Mozilla/5.0",
+        "Referer": "https://namu.wiki/",
+        "Accept-Language": "ko-KR,ko;q=0.9"
     }
 
     try:
