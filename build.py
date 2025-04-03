@@ -14,12 +14,13 @@ def fetch_namu_page(keyword):
     }
 
     try:
-        response = requests.get(url, headers=headers)
-        if response.status_code != 200:
-            print(f"[!] '{keyword}' 문서를 찾을 수 없습니다. (status: {response.status_code})")
+        res = requests.get(url, headers=headers)
+        
+        if res.status_code != 200:
+            print(f"[!] '{keyword}' 문서를 찾을 수 없습니다. (status: {res.status_code})")
             return False
 
-        soup = BeautifulSoup(response.text, "html.parser")
+        soup = BeautifulSoup(res.text, "html.parser")
         article = soup.find("article")
         summary = article.find("p").text.strip() if article and article.find("p") else "요약 정보 없음"
 
@@ -51,10 +52,6 @@ def generate_entry_list():
     with open(OUTPUT_JSON, "w", encoding="utf-8") as f:
         json.dump(entries, f, ensure_ascii=False, indent=2)
 
-    # <<- HERE StMn
-    if res.status_code != 200:
-        print(f"[!] {title} 요청 실패: {res.status_code}")
-
     print(f"[✓] entry_list.json 생성 완료 ({len(entries)}개 항목)")
 
 def main():
@@ -68,10 +65,11 @@ def main():
         keywords = [line.strip() for line in f if line.strip()]
 
     for kw in keywords:
-        fetch_namu_page(kw)  # 실패해도 기존 HTML은 그대로 둠
+        fetch_namu_page(kw)
 
     generate_entry_list()
     print("[🎉] 자동 빌드 완료!")
 
 if __name__ == "__main__":
     main()
+
