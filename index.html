@@ -6,6 +6,17 @@
   <style>
     body { font-family: sans-serif; display: flex; }
     #menu { width: 300px; padding: 20px; border-right: 1px solid #ccc; overflow-y: auto; height: 100vh; position: sticky; top: 0%; }
+    #menu::-webkit-scrollbar {
+      width: 8px;
+    }
+    #menu::-webkit-scrollbar-track {
+      background: #eee;
+    }
+    #menu::-webkit-scrollbar-thumb {
+      background: #bbb;
+      border-radius: 4px;
+    }
+
     #content { flex: 1; padding: 20px; }
     iframe { width: 100%; height: 600px; border: none; }
     .entry { margin-bottom: 15px; }
