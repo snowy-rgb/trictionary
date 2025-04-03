@@ -5,35 +5,58 @@
   <title>Trictionary</title>
   <style>
     body { font-family: sans-serif; display: flex; }
-    #menu { width: 250px; padding: 20px; border-right: 1px solid #ccc; }
+    #menu { width: 300px; padding: 20px; border-right: 1px solid #ccc; overflow-y: auto; }
     #content { flex: 1; padding: 20px; }
     iframe { width: 100%; height: 600px; border: none; }
+    .entry { margin-bottom: 15px; }
+    .entry a {
+      font-weight: bold;
+      color: #0366d6;
+      text-decoration: none;
+    }
+    .entry p {
+      font-size: 0.9em;
+      color: #555;
+      margin: 5px 0 0;
+    }
   </style>
 </head>
 <body>
   <div id="menu">
     <h2>Trictionary</h2>
-    <ul id="entryList"></ul>
+    <div id="entryList">불러오는 중...</div>
   </div>
   <div id="content">
     <iframe name="contentFrame"></iframe>
   </div>
 
   <script>
-    fetch('entry_list.json')
-      .then(res => res.json())
-      .then(data => {
-        const list = document.getElementById('entryList');
-        data.forEach(name => {
-          const li = document.createElement('li');
-          const a = document.createElement('a');
-          a.href = `entries/${name}.html`;
-          a.textContent = name;
-          a.target = 'contentFrame';
-          li.appendChild(a);
-          list.appendChild(li);
-        });
-      });
+    async function loadEntries() {
+      const listRes = await fetch('inSys/entry_list.json');
+      const keywords = await listRes.json();
+
+      const container = document.getElementById('entryList');
+      container.innerHTML = '';
+
+      for (const name of keywords) {
+        const htmlRes = await fetch(`entries/${name}.html`);
+        const htmlText = await htmlRes.text();
+
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(htmlText, "text/html");
+        const summary = doc.querySelector('p')?.textContent || "요약 없음";
+
+        const entryDiv = document.createElement('div');
+        entryDiv.className = 'entry';
+        entryDiv.innerHTML = `
+          <a href="entries/${name}.html" target="contentFrame">${name}</a>
+          <p>${summary}</p>
+        `;
+        container.appendChild(entryDiv);
+      }
+    }
+
+    loadEntries();
   </script>
 </body>
 </html>
