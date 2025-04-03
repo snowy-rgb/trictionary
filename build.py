@@ -10,6 +10,7 @@ OUTPUT_JSON = "inSys/entry_list.json"
 def fetch_namu_page(keyword):
     url = f"https://namu.moe/w/{keyword}"
     wiki_url = f"https://namu.wiki/w/{keyword}"  # 이건 공식 위키용 링크
+    char_url = f"https://namu.wiki/w/{keyword}(트릭컬%20리바이브)" # 캐릭터용 문서
     headers = {
         "User-Agent": "Mozilla/5.0",
         "Referer": "https://namu.moe/",
@@ -34,7 +35,7 @@ def fetch_namu_page(keyword):
         <body>
         <h1>{keyword}</h1>
         <p>{summary}</p>
-        <p><a href="{wiki_url}" target="_blank">[나무위키 원문 보기]</a></p>
+        <p><a href="{char_url}" target="_blank">[나무위키 원문 보기]</a></p>
         </body></html>
         """
 
