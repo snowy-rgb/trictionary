@@ -51,6 +51,10 @@ def generate_entry_list():
     with open(OUTPUT_JSON, "w", encoding="utf-8") as f:
         json.dump(entries, f, ensure_ascii=False, indent=2)
 
+    # <<- HERE StMn
+    if res.status_code != 200:
+        print(f"[!] {title} 요청 실패: {res.status_code}")
+
     print(f"[✓] entry_list.json 생성 완료 ({len(entries)}개 항목)")
 
 def main():
