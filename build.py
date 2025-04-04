@@ -70,9 +70,10 @@ def main():
 
     with open(KEYWORD_FILE, "r", encoding="utf-8") as f:
         keywords = [line.strip() for line in f if line.strip()]
-
-    for kw in keywords:
-        fetch_namu_page(kw)
+        
+    # del
+    # for kw in keywords:
+    #     fetch_namu_page(kw)
 
     for idx, kw in enumerate(keywords):
         fetch_namu_page(kw, idx)
