@@ -8,7 +8,7 @@ ENTRIES_DIR = "entries"
 OUTPUT_JSON = "inSys/entry_list.json"
 
 def fetch_namu_page(keyword, idx):
-    for idx, kw in enumerate(keywords):
+
         url = f"https://namu.moe/w/{keyword}"
         wiki_url = f"https://namu.wiki/w/{keyword}"  # 이건 공식 위키용 링크
         char_url = f"https://namu.wiki/w/{keyword}(트릭컬%20리바이브)" # 캐릭터용 문서
@@ -73,6 +73,9 @@ def main():
 
     for kw in keywords:
         fetch_namu_page(kw)
+
+    for idx, kw in enumerate(keywords):
+        fetch_namu_page(kw, idx)
 
     generate_entry_list()
     print("[🎉] 자동 빌드 완료!")
