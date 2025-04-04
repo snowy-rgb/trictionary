@@ -2,6 +2,7 @@ import requests
 from bs4 import BeautifulSoup
 import os
 import json
+import re
 
 KEYWORD_FILE = "inSys/keywords.txt"
 ENTRIES_DIR = "entries"
@@ -54,15 +55,31 @@ def fetch_namu_page(keyword, idx):
 
 def generate_entry_list():
     files = os.listdir(ENTRIES_DIR)
-    entries = [f.replace(".html", "") for f in files if f.endswith(".html")]
+    entries = []
 
-    # ✅ 여기서 정렬 추가!
-    entries.sort()  # 가나다 또는 code[0001] 순서로 정렬됨
+    for file in files:
+        if file.endswith(".html"):
+            path = os.path.join(ENTRIES_DIR, file)
+            with open(path, "r", encoding="utf-8") as f:
+                content = f.read()
+                # code[0001] 같은 코드 찾기
+                match = re.search(r"code\[(\d+)\]", content)
+                if match:
+                    code = int(match.group(1))
+                    name = file.replace(".html", "")
+                    entries.append((code, name))
+
+    # ✅ code 순서대로 정렬
+    entries.sort(key=lambda x: x[0])
+
+    # ✅ 이름만 추출해서 저장
+    sorted_names = [name for _, name in entries]
 
     with open(OUTPUT_JSON, "w", encoding="utf-8") as f:
-        json.dump(entries, f, ensure_ascii=False, indent=2)
+        json.dump(sorted_names, f, ensure_ascii=False, indent=2)
 
-    print(f"[✓] entry_list.json 생성 완료 ({len(entries)}개 항목)")
+    print(f"[✓] entry_list.json 생성 완료 ({len(sorted_names)}개 항목)")
+
 
 
 def main():
