@@ -56,10 +56,14 @@ def generate_entry_list():
     files = os.listdir(ENTRIES_DIR)
     entries = [f.replace(".html", "") for f in files if f.endswith(".html")]
 
+    # ✅ 여기서 정렬 추가!
+    entries.sort()  # 가나다 또는 code[0001] 순서로 정렬됨
+
     with open(OUTPUT_JSON, "w", encoding="utf-8") as f:
         json.dump(entries, f, ensure_ascii=False, indent=2)
 
     print(f"[✓] entry_list.json 생성 완료 ({len(entries)}개 항목)")
+
 
 def main():
     os.makedirs(ENTRIES_DIR, exist_ok=True)
